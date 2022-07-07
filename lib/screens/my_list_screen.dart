@@ -15,32 +15,27 @@ class _MyListScreenState extends State<MyListScreen> {
   @override
   Widget build(BuildContext context) {
     final _myList = context.watch<MovieProvider>().myList;
+    final movieList = context.watch<MovieProvider>().movieDetails;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("My List (${_myList.length})"),
-      ),
-      body: ListView.builder(
-          itemCount: _myList.length,
-          itemBuilder: (_, index) {
-            final currentMovie = _myList[index];
-            return Card(
-              key: ValueKey(currentMovie.title),
-              elevation: 4,
-              child: ListTile(
-                title: Text(currentMovie.title),
-                subtitle: Text(currentMovie.runtime ?? ''),
-                trailing: TextButton(
-                  child: const Text(
-                    'Remove',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  onPressed: () {
-                    context.read<MovieProvider>().removeFromList(currentMovie);
-                  },
-                ),
+        appBar: AppBar(
+          title: Text("My List (${_myList.length})"),
+        ),
+        body: Card(
+          key: ValueKey(movieList?.title),
+          elevation: 4,
+          child: ListTile(
+            title: Text(
+                (movieList!.title != null) ? movieList.title.toString() : ""),
+            trailing: TextButton(
+              child: const Text(
+                'Remove',
+                style: TextStyle(color: Colors.red),
               ),
-            );
-          }),
-    );
+              onPressed: () {
+                // context.read<MovieProvider>().removeFromList(_movieList);
+              },
+            ),
+          ),
+        ));
   }
 }
